@@ -1,14 +1,17 @@
-import React, { useState } from "react";
-import Container from "../Container";
-import { BsArrowLeft } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react'
+import Container from '../../components/Container'
 import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet";
-import { AddChocolate } from "../../api/allApis";
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import { UpdateChocolate } from '../../api/allApis';
 
 const options = ["Dairy Milk", "Peanut", "Vanilla", "Treat"];
 
-function AddProduct() {
+function Update() {
+  const navigate = useNavigate();
+  const product = useLoaderData();
+  const {name, category, country, photoUrl, _id} = product;
+
   const [selectedOption, setSelectedOption] = useState(options[0]);
   const onchangeValue = event => {
     setSelectedOption(event.target.value);
@@ -21,20 +24,16 @@ function AddProduct() {
   } = useForm();
   const onSubmit = data => {
     console.log(data);
-    AddChocolate(data);
+    UpdateChocolate(_id, data);
     reset();
+    navigate('/');
   };
   return (
     <div className="py-10">
       <Helmet>
-        <title>Chocolate || Add Form</title>
+        <title>Chocolate || Update Form</title>
       </Helmet>
       <Container>
-        <div className="flex items-center font-poppins">
-          <Link to="/" className="inline-block">
-            <BsArrowLeft className="inline-block mr-2" /> All Chocolates
-          </Link>
-        </div>
         <hr className="my-5" />
         <div className="bg-gray-100 p-10 rounded-md font-poppins">
           <p className="text-center text-[16px] font-light pb-10">
@@ -50,6 +49,7 @@ function AddProduct() {
                 type="text"
                 id="name"
                 name="name"
+                defaultValue={name}
                 {...register("name")}
                 placeholder="Chocolate Name"
               />
@@ -63,6 +63,7 @@ function AddProduct() {
                 type="text"
                 id="country"
                 name="country"
+                defaultValue={country}
                 {...register("country")}
                 placeholder="Enter Country Name"
               />
@@ -100,6 +101,7 @@ function AddProduct() {
                 type="url"
                 id="photoUrl"
                 name="photoUrl"
+                defaultValue={photoUrl}
                 {...register("photoUrl")}
                 placeholder="Enter Image Url"
               />
@@ -107,7 +109,7 @@ function AddProduct() {
             <div className="pt-5">
               <input
                 type="submit"
-                value="Save"
+                value="Update"
                 className="w-full bg-[#91572B] py-2 text-center text-white"
               />
             </div>
@@ -115,7 +117,7 @@ function AddProduct() {
         </div>
       </Container>
     </div>
-  );
+  )
 }
 
-export default AddProduct;
+export default Update
