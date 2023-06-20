@@ -20,7 +20,7 @@ export const router = createBrowserRouter([
       {
         path: '/update/:id',
         element: <Update />,
-        loader: ({params}) => fetch(`http://localhost:5000/chocolate/${params.id}`)
+        loader: ({params}) => fetch(`https://chocolate-server-guljer77.vercel.app/chocolate/${params.id}`)
       }
     ]
   }

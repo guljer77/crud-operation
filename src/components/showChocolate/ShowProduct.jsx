@@ -9,7 +9,7 @@ import { DeleteChocolate } from "../../api/allApis";
 function ShowProduct() {
   const [chocolate, setChocolate] = useState([]);
   useEffect(() => {
-    fetch(`http://localhost:5000/chocolate`)
+    fetch(`https://chocolate-server-guljer77.vercel.app/chocolate`)
       .then(res => res.json())
       .then(data => setChocolate(data));
   }, []);
